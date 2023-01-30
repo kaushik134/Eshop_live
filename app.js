@@ -11,6 +11,7 @@ app.options("*",cors())
 
 mongoose.set("strictQuery",true)
 app.use(express.json())
+app.use(express.urlencoded())
 app.use(morgan("tiny"))
 // app.use(authJwt)
 
@@ -29,20 +30,13 @@ app.get("/",(req,res)=>{
     console.log("inside server");
 })
 
-const userroute = require("./Routes/UserRoute")
-app.use("/UserRoute",userroute)
 
-const categoryroute = require("./Routes/CategoryRoute")
-app.use("/Category",categoryroute)
+app.use("/UserRoute",require("./Routes/UserRoute"))
+app.use("/Category",require("./Routes/CategoryRoute"))
+app.use("/Product",require("./Routes/ProductRoute"))
+app.use("/Order",require("./Routes/OrdersRoute"))
+app.use("/OrderItem",require("./Routes/OrderItemsRoute"))
 
-const productroute = require("./Routes/ProductRoute")
-app.use("/Product",productroute)
-
-const orderroute = require("./Routes/OrdersRoute")
-app.use("/Order",orderroute)
-
-const orderitemroute = require("./Routes/OrderItemsRoute")
-app.use("/OrderItem",orderitemroute)
 
 const PORT = 3300
 app.listen(PORT,()=>{
